@@ -539,3 +539,24 @@ const countdownInit = () => {
 };
 document.addEventListener('DOMContentLoaded', countdownInit);
 
+
+
+// ======= WhatsApp Form Submission =======
+  document.getElementById("whatsapp-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // Get input values
+    var name = document.getElementById("name").value.trim();
+    var message = document.getElementById("message").value.trim();
+
+    // Format WhatsApp message
+    var whatsappMessage = `Hello, my name is ${name}. ${message}`;
+    var phoneNumber = "7396439736"; // Replace with your number
+
+    // Create WhatsApp link
+    var url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+
+    // Open WhatsApp in new tab
+    window.open(url, "_blank");
+  });
+
