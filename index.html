@@ -32,6 +32,8 @@
       document.documentElement.setAttribute('data-bs-theme', storedTheme);
       })();
     </script>
+       <script src="script.js" defer></script>
+    
   </head>
   <body>
     
@@ -51,12 +53,16 @@
             <!-- Vertex--> 
             
             <!-- If you plan to use an image logo, uncomment this if it is commented-->
-            
+             
+                    <img class="logo dark img-fluid" src="/assets/images/DP_02.jpg" alt="Astrid Dermatology and Cosmetology Clinic Logo" />
+                   
+                    
+                  
+                <img class="logo light img-fluid" src="/assets/images/DP_02.jpg" alt="FreeBootstrap.net image placeholder w-20 h-20"></a>
             
             
             </a>
           <!-- End Logo-->
-          
           <!-- Start offcanvas-->
           <div class="offcanvas offcanvas-start w-75" id="fbs__net-navbars" tabindex="-1" aria-labelledby="fbs__net-navbarsLabel">
             
@@ -83,7 +89,7 @@
               <ul class="navbar-nav nav me-auto ps-lg-5 mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link scroll-link active" aria-current="page" href="#home">Home</a></li>
                 <li class="nav-item"><a class="nav-link scroll-link" href="#about">About</a></li>
-                <li class="nav-item"><a class="nav-link scroll-link" href="#pricing">Pricing</a></li>
+                <!-- <li class="nav-item"><a class="nav-link scroll-link" href="#pricing">Pricing</a></li> -->
                 <li class="nav-item"><a class="nav-link scroll-link" href="#how-it-works">How It Works</a></li>
                 <li class="nav-item"><a class="nav-link scroll-link" href="#services">Services</a></li>
                 <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown <i class="bi bi-chevron-down"></i></a>
@@ -91,20 +97,20 @@
                   <ul class="dropdown-menu">
                     <li><a class="nav-link scroll-link dropdown-item" href="#">Multipages</a></li>
                     <li><a class="nav-link scroll-link dropdown-item" href="#services">Services</a></li>
-                    <li><a class="nav-link scroll-link dropdown-item" href="#pricing">Pricing</a></li>
+                    <!-- <li><a class="nav-link scroll-link dropdown-item" href="#pricing">Pricing</a></li> -->
                     <li class="nav-item dropstart"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropstart <i class="bi bi-chevron-right"></i></a>
                       <ul class="dropdown-menu">
                         <li><a class="nav-link scroll-link dropdown-item" href="#services">Services</a></li>
-                        <li><a class="nav-link scroll-link dropdown-item" href="#pricing">Pricing</a></li>
+                        <!-- <li><a class="nav-link scroll-link dropdown-item" href="#pricing">Pricing</a></li> -->
                         <li class="nav-item dropstart"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropstart <i class="bi bi-chevron-right"></i></a>
                           <ul class="dropdown-menu">
                             <li><a class="nav-link scroll-link dropdown-item" href="#services">Services</a></li>
-                            <li><a class="nav-link scroll-link dropdown-item" href="#pricing">Pricing</a></li>
+                            <!-- <li><a class="nav-link scroll-link dropdown-item" href="#pricing">Pricing</a></li> -->
                             <li><a class="nav-link scroll-link dropdown-item" href="#">Something else here</a></li>
                             <li class="nav-item dropend"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropend <i class="bi bi-chevron-right"></i></a>
                               <ul class="dropdown-menu">
                                 <li><a class="nav-link scroll-link dropdown-item" href="#services">Services</a></li>
-                                <li><a class="nav-link scroll-link dropdown-item" href="#pricing">Pricing</a></li>
+                                <!-- <li><a class="nav-link scroll-link dropdown-item" href="#pricing">Pricing</a></li> -->
                                 <li><a class="nav-link scroll-link dropdown-item" href="#">Something else here</a></li>
                               </ul>
                             </li>
@@ -274,7 +280,7 @@
         <!-- End Features-->
         
         <!-- ======= Pricing =======-->
-        <section class="section pricing__v2" id="pricing">
+        <!-- <section class="section pricing__v2" id="pricing">
           <div class="container">
             <div class="row mb-5">
               <div class="col-md-5 mx-auto text-center"><span class="subtitle text-uppercase mb-3" data-aos="fade-up" data-aos-delay="0">Pricing</span>
@@ -314,8 +320,37 @@
               </div>
             </div>
           </div>
-        </section>
+        </section> -->
         <!-- End Pricing-->
+
+      <!-- image slider -->
+        <div class="container">
+      <div class="slider-wrapper">
+        <button id="prev-slide" class="slide-button material-symbols-rounded">
+          chevron_left
+        </button>
+        <ul class="image-list">
+          <img class="image-item" src="/assets/images/img-16-min.jpg" alt="img-1" />
+          <img class="image-item" src="/assets/images/img-13-min.jpg" alt="img-2" />
+          <img class="image-item" src="/assets/images/img-10-min.jpg" alt="img-3" />
+          <img class="image-item" src="/assets/images/img-3-min.jpg" alt="img-4" />
+          <img class="image-item" src="/assets/images/img-1-min.jpg" alt="img-5" />
+          <img class="image-item" src="images/img-6.jpg" alt="img-6" />
+          <img class="image-item" src="images/img-7.jpg" alt="img-7" />
+          <img class="image-item" src="images/img-8.jpg" alt="img-8" />
+          <img class="image-item" src="images/img-9.jpg" alt="img-9" />
+          <img class="image-item" src="images/img-10.jpg" alt="img-10" />
+        </ul>
+        <button id="next-slide" class="slide-button material-symbols-rounded">
+          >
+        </button>
+      </div>
+      <div class="slider-scrollbar">
+        <div class="scrollbar-track">
+          <div class="scrollbar-thumb"></div>
+        </div>
+      </div>
+    </div>
         
         <!-- ======= How it works =======-->
         <section class="section howitworks__v1" id="how-it-works">
@@ -813,6 +848,8 @@
   });
 </script>
 
+
+<script src="script.js"></script>
 
     <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="assets/vendors/gsap/gsap.min.js"></script>
