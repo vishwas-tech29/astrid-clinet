@@ -1379,7 +1379,7 @@ h6 {
 .footer {
   position: relative;
   width: 100%;
-  background:#144B4B;
+  background:#030000;
   min-height: 100px;
   padding: 20px 50px;
   display: flex;
@@ -1423,7 +1423,7 @@ h6 {
 
 .menu__link {
   font-size: 1.2rem;
-  color: #fff;
+  color: #000000;
   margin: 0 10px;
   display: inline-block;
   transition: 0.5s;
@@ -1434,6 +1434,7 @@ h6 {
 
 .menu__link:hover {
   opacity: 1;
+  color: #fff;
 }
 
 .footer p {
