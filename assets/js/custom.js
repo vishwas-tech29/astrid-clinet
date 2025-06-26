@@ -1,25 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
-  
-  
-
+  // ======= Navbar Active Link Logic =======
   const sections = document.querySelectorAll(".section");
   const navLinks = document.querySelectorAll(".fbs__net-navbar .scroll-link");
-
   function removeActiveClasses() {
-    if (navLinks) {
-      navLinks.forEach((link) => link.classList.remove("active"));
-    }
+    if (navLinks) navLinks.forEach((link) => link.classList.remove("active"));
   }
-
   function addActiveClass(currentSectionId) {
     const activeLink = document.querySelector(
       `.fbs__net-navbar .scroll-link[href="#${currentSectionId}"]`
     );
-    if (activeLink) {
-      activeLink.classList.add("active");
-    }
+    if (activeLink) activeLink.classList.add("active");
   }
-
   function getCurrentSection() {
     let currentSection = null;
     let minDistance = Infinity;
@@ -27,17 +18,14 @@ document.addEventListener("DOMContentLoaded", function () {
       sections.forEach((section) => {
         const rect = section.getBoundingClientRect();
         const distance = Math.abs(rect.top - window.innerHeight / 4);
-
         if (distance < minDistance && rect.top < window.innerHeight) {
           minDistance = distance;
           currentSection = section.getAttribute("id");
         }
       });
     }
-
     return currentSection;
   }
-
   function updateActiveLink() {
     const currentSectionId = getCurrentSection();
     if (currentSectionId) {
@@ -45,25 +33,22 @@ document.addEventListener("DOMContentLoaded", function () {
       addActiveClass(currentSectionId);
     }
   }
-
   window.addEventListener("scroll", updateActiveLink);
 
+  // ======= Portfolio Grid (Isotope) =======
   const portfolioGrid = document.querySelector('#portfolio-grid');
   if (portfolioGrid) {
     var iso = new Isotope("#portfolio-grid", {
       itemSelector: ".portfolio-item",
       layoutMode: "masonry",
     });
-
     if (iso) {
       iso.on("layoutComplete", updateActiveLink);
-
       imagesLoaded("#portfolio-grid", function () {
         iso.layout();
         updateActiveLink();
       });
     }
-
     var filterButtons = document.querySelectorAll(".filter-button");
     if (filterButtons) {
       filterButtons.forEach(function (button) {
@@ -71,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
           e.preventDefault();
           var filterValue = button.getAttribute("data-filter");
           iso.arrange({ filter: filterValue });
-
           filterButtons.forEach(function (btn) {
             btn.classList.remove("active");
           });
@@ -80,10 +64,252 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       });
     }
-
     updateActiveLink();
   }
+
+  // ======= Navbar Hover Events =======
+  const handleNavbarEvents = () => {
+    const dropdowns = document.querySelectorAll('.navbar .dropdown');
+    const dropstarts = document.querySelectorAll('.navbar .dropstart');
+    const dropends = document.querySelectorAll('.navbar .dropend');
+    if (window.innerWidth >= 992) {
+      dropdowns.forEach(addHoverEvents);
+      dropstarts.forEach(addHoverEvents);
+      dropends.forEach(addHoverEvents);
+    } else {
+      dropdowns.forEach(removeHoverEvents);
+      dropstarts.forEach(removeHoverEvents);
+      dropends.forEach(removeHoverEvents);
+    }
+  };
+  const handleResize = () => {
+    const dropdowns = document.querySelectorAll('.navbar .dropdown');
+    const dropstarts = document.querySelectorAll('.navbar .dropstart');
+    const dropends = document.querySelectorAll('.navbar .dropend');
+    dropdowns.forEach(removeHoverEvents);
+    dropstarts.forEach(removeHoverEvents);
+    dropends.forEach(removeHoverEvents);
+    handleNavbarEvents();
+  };
+  window.addEventListener('resize', handleResize);
+  handleNavbarEvents();
+
+  // ======= Hero Photo Banner Scroll =======
+  const heroImageList = document.querySelector('.hero__v6 .image-list');
+  const heroPrevBtn = document.getElementById('hero-prev-slide');
+  const heroNextBtn = document.getElementById('hero-next-slide');
+  if (heroImageList && heroPrevBtn && heroNextBtn) {
+    heroPrevBtn.addEventListener('click', function() {
+      heroImageList.scrollBy({ left: -350, behavior: 'smooth' });
+    });
+    heroNextBtn.addEventListener('click', function() {
+      heroImageList.scrollBy({ left: 350, behavior: 'smooth' });
+    });
+  }
+
+  // ======= Chatbot Widget Logic =======
+  const toggleBtn = document.getElementById('chatbot-toggle');
+  const windowDiv = document.getElementById('chatbot-window');
+  const closeBtn = document.getElementById('chatbot-close');
+  const form = document.getElementById('chatbot-form');
+  const input = document.getElementById('chatbot-input');
+  const messages = document.getElementById('chatbot-messages');
+  if (toggleBtn && windowDiv && closeBtn && form && input && messages) {
+    toggleBtn.onclick = () => windowDiv.style.display = 'flex';
+    closeBtn.onclick = () => windowDiv.style.display = 'none';
+    form.onsubmit = function(e) {
+      e.preventDefault();
+      const userMsg = input.value.trim();
+      if (!userMsg) return;
+      appendMessage('You', userMsg, true);
+      input.value = '';
+      setTimeout(() => replyToUser(userMsg), 500);
+    };
+  }
+  function appendMessage(sender, text, isUser) {
+    const msgDiv = document.createElement('div');
+    msgDiv.style.margin = '0.5rem 0';
+    msgDiv.style.textAlign = isUser ? 'right' : 'left';
+    if (isUser) {
+      msgDiv.innerHTML = `<span style="display:inline-block;background:#CCE8C9;color:#215C5C;padding:8px 14px;border-radius:14px;max-width:80%;word-break:break-word;">${text}</span>`;
+    } else {
+      msgDiv.innerHTML = `<span style="display:inline-block;background:#215C5C;color:#fff;padding:8px 14px;border-radius:14px;max-width:80%;word-break:break-word;">${text}</span>`;
+    }
+    messages.appendChild(msgDiv);
+    messages.scrollTop = messages.scrollHeight;
+  }
+  async function replyToUser(msg) {
+    const lower = msg.toLowerCase();
+    // Handle greetings directly
+    if (/^(hi|hello|hey|good morning|good afternoon|good evening)[!,. ]*$/i.test(lower)) {
+      appendMessage('Bot', 'Hello! How can I help you today? You can ask me about our clinic, services, doctor, or treatments.', false);
+      return;
+    }
+    // Handle service-related questions directly
+    if (/(what|which|tell me|list|do you offer|provide).*(service|treatment|offer|procedure|speciality|specialty)/i.test(lower) ||
+        /(services|treatments|procedures|specialities|specialties)/i.test(lower)) {
+      appendMessage('Bot', `Astrid Clinic offers:\n• Acne & Scar Treatment\n• Hair Restoration\n• Laser Skin Rejuvenation\n• Skin Disease Management\n• Anti-Aging Solutions\n• Pigmentation Correction\n• Cosmetic Procedures\nIf you want details about any service, just ask!`, false);
+      return;
+    }
+    // Handle doctor info
+    if (/(doctor|dr\.? alekhya|about (the )?doctor|who.*doctor|who.*you|your qualification|your experience)/i.test(lower)) {
+      appendMessage('Bot', 'Dr. Alekhya Rallapalli (MBBS, MD DVL) is a dermatologist and cosmetologist with over 10 years of expertise, offering advanced skin and hair treatments.', false);
+      return;
+    }
+    // Handle location/address
+    if (/(where.*located|location|address|how to reach|clinic location|find you)/i.test(lower)) {
+      appendMessage('Bot', 'Astrid Dermatology and Cosmetology Clinic is located at Road No: 2, VVC Building, 3rd Floor, Road, opposite KBR Park, Banjara Hills, Hyderabad, Telangana 500033.', false);
+      return;
+    }
+    // Handle contact info
+    if (/(contact|phone|email|how.*contact|reach you|call you)/i.test(lower)) {
+      appendMessage('Bot', 'You can contact us at +91 8495 898989. More details are in the Contact section of our website.', false);
+      return;
+    }
+    // Handle timings/hours
+    if (/(timing|hours|open|close|working hours|when.*open|when.*close)/i.test(lower)) {
+      appendMessage('Bot', 'Our clinic hours are available in the Contact section. Please let us know if you need specific timings.', false);
+      return;
+    }
+    // Handle safety/FDA
+    if (/(safe|fda|approved|is it safe|safety|certified)/i.test(lower)) {
+      appendMessage('Bot', 'Yes, all our procedures use FDA-approved technology and products. Patient safety and comfort are our top priorities.', false);
+      return;
+    }
+    // Handle aftercare/follow-up
+    if (/(aftercare|follow up|post treatment|care after|do you provide aftercare)/i.test(lower)) {
+      appendMessage('Bot', 'Yes, we provide detailed aftercare instructions and schedule follow-up appointments to monitor your progress and ensure optimal results.', false);
+      return;
+    }
+    // Handle pricing/cost/fee
+    if (/(price|cost|fee|how much|charges|pricing|rate|rates|expensive|cheap|affordable)/i.test(lower)) {
+      appendMessage('Bot', 'For pricing and packages, please contact us directly as costs may vary depending on the treatment.', false);
+      return;
+    }
+    // Handle testimonials/reviews
+    if (/(testimonial|review|patient story|feedback|what do patients say|success story|experience|client story)/i.test(lower)) {
+      appendMessage('Bot', 'You can read real patient stories and testimonials in the Testimonials section of our website.', false);
+      return;
+    }
+    // Handle FAQ
+    if (/(faq|frequently asked|common question|question|doubt|doubts)/i.test(lower)) {
+      appendMessage('Bot', 'You can find answers to common questions in our FAQ section. Feel free to ask me anything specific!', false);
+      return;
+    }
+    // Handle appointment booking
+    if (/(book|appointment|schedule|reserve|see.*doctor|consultation|visit).*(appointment|slot|consult|doctor|clinic)/i.test(lower) || /appointment|book.*visit|book.*consult/i.test(lower)) {
+      appendMessage('Bot', 'You can book an appointment directly via WhatsApp: <a href="https://wa.me/918495898989?text=Hi%2C%20I%20would%20like%20to%20book%20an%20appointment%20at%20Astrid%20Clinic." target="_blank" style="color:#fff;text-decoration:underline;">Chat with us on WhatsApp</a>.', false);
+      return;
+    }
+    appendMessage('Bot', 'Thinking...', false);
+    // Clinic context for better answers
+    const context = `
+      About: Astrid Dermatology and Cosmetology Clinic specializes in skin and hair aesthetics, offering state-of-the-art treatments to enhance appearance and promote healthy skin and hair. 
+      Doctor: Dr. Alekhya Rallapalli, MBBS, MD DVL, 10+ years of expertise.
+      Services: Acne & Scar Treatment, Hair Restoration, Laser Skin Rejuvenation, Skin Disease Management, Anti-Aging, Pigmentation Correction, and more.
+      FAQ: All procedures use FDA-approved technology. Aftercare and follow-up are provided. Contact us for appointments and pricing.
+    `;
+    const prompt = `You are a helpful assistant for a dermatology clinic. Use the following info to answer user questions as accurately as possible:\n${context}\nIf the user asks about services, always list them clearly and concisely.\nUser: ${msg}\nBot:`;
+    try {
+      const response = await fetch('https://api.openai.com/v1/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer YOUR_OPENAI_API_KEY' // <-- Replace with your key
+        },
+        body: JSON.stringify({
+          model: 'text-davinci-003',
+          prompt: prompt,
+          max_tokens: 120,
+          temperature: 0.5,
+          n: 1,
+          stop: ['User:', 'Bot:']
+        })
+      });
+      const data = await response.json();
+      messages.lastChild.remove();
+      if (data.choices && data.choices[0] && data.choices[0].text) {
+        appendMessage('Bot', data.choices[0].text.trim(), false);
+      } else {
+        appendMessage('Bot', 'Sorry, I could not get an answer right now.', false);
+      }
+    } catch (e) {
+      messages.lastChild.remove();
+      appendMessage('Bot', 'Sorry, there was an error connecting to the AI service.', false);
+    }
+  }
+
+  // ======= WhatsApp Form Submission =======
+  const whatsappForm = document.getElementById("whatsapp-form");
+  if (whatsappForm) {
+    whatsappForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var name = document.getElementById("name").value.trim();
+      var message = document.getElementById("message").value.trim();
+      var whatsappMessage = `Hello, my name is ${name}. ${message}`;
+      var phoneNumber = "7396439736";
+      var url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+      window.open(url, "_blank");
+    });
+  }
+
+  // ======= Coming Soon Countdown =======
+  const daysEl = document.getElementById("days");
+  const hoursEl = document.getElementById("hours");
+  const minutesEl = document.getElementById("minutes");
+  const secondsEl = document.getElementById("seconds");
+  if (daysEl && hoursEl && minutesEl && secondsEl) {
+    const currentYear = new Date().getFullYear();
+    const nextYear = currentYear + 1;
+    const launchDate = new Date(`December 31, ${nextYear} 23:59:59`).getTime();
+    const x = setInterval(function () {
+      const now = new Date().getTime();
+      const distance = launchDate - now;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      daysEl.innerText = days;
+      hoursEl.innerText = hours;
+      minutesEl.innerText = minutes;
+      secondsEl.innerText = seconds;
+      if (distance < 0) {
+        clearInterval(x);
+        document.querySelector(".countdown").innerText = "Launched!";
+      }
+    }, 1000);
+  }
+
+  // ======= Loader =======
+  var loader = document.getElementById("loader");
+  if (loader) {
+    window.addEventListener("load", function () {
+      setTimeout(function () {
+        loader.classList.add("hide");
+        document.body.classList.remove("loading");
+      }, 1000);
+    });
+    document.body.classList.add("loading");
+  }
 });
+
+// Helper functions for navbar hover events
+function addHoverEvents(dropdown) {
+  dropdown.addEventListener('mouseenter', showDropdown);
+  dropdown.addEventListener('mouseleave', hideDropdown);
+}
+function removeHoverEvents(dropdown) {
+  dropdown.removeEventListener('mouseenter', showDropdown);
+  dropdown.removeEventListener('mouseleave', hideDropdown);
+}
+function showDropdown() {
+  this.classList.add('show');
+  this.querySelector('.dropdown-menu').classList.add('show');
+}
+function hideDropdown() {
+  this.classList.remove('show');
+  this.querySelector('.dropdown-menu').classList.remove('show');
+}
 
 const navbarScrollInit = () => {
   var navbar = document.querySelector(".fbs__net-navbar");
@@ -401,240 +627,3 @@ const pureCounterInit = () => {
   });
 }
 document.addEventListener("DOMContentLoaded", pureCounterInit);
-
-// ======= Disable Click Navbar Dropdown =======
-const addHoverEvents = (dropdown) => {
-  const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
-
-  const preventClick = (event) => event.preventDefault();
-  const showDropdown = () => {
-    dropdown.classList.add('show');
-    dropdownToggle.setAttribute('aria-expanded', 'true');
-    const dropdownMenu = dropdown.querySelector('.dropdown-menu');
-    dropdownMenu.classList.add('show');
-  };
-  const hideDropdown = () => {
-    dropdown.classList.remove('show');
-    dropdownToggle.setAttribute('aria-expanded', 'false');
-    const dropdownMenu = dropdown.querySelector('.dropdown-menu');
-    dropdownMenu.classList.remove('show');
-  };
-
-  // Disable the click event for toggling the dropdown
-  dropdownToggle.addEventListener('click', preventClick);
-
-  // Open dropdown on hover
-  dropdown.addEventListener('mouseover', showDropdown);
-
-  // Close dropdown when mouse leaves
-  dropdown.addEventListener('mouseleave', hideDropdown);
-
-  // Store references to the event listeners for later removal
-  dropdown.__events = { preventClick, showDropdown, hideDropdown };
-};
-
-const removeHoverEvents = (dropdown) => {
-  const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
-  const { preventClick, showDropdown, hideDropdown } = dropdown.__events || {};
-
-  if (preventClick) {
-    // Remove the event listeners
-    dropdownToggle.removeEventListener('click', preventClick);
-    dropdown.removeEventListener('mouseover', showDropdown);
-    dropdown.removeEventListener('mouseleave', hideDropdown);
-
-    // Remove the reference to the stored events
-    delete dropdown.__events;
-  }
-};
-
-const handleNavbarEvents = () => {
-  const dropdowns = document.querySelectorAll('.navbar .dropdown');
-  const dropstarts = document.querySelectorAll('.navbar .dropstart');
-  const dropends = document.querySelectorAll('.navbar .dropend');
-
-  if (window.innerWidth >= 992) {
-
-    // Add hover events to dropdowns
-    dropdowns.forEach(addHoverEvents);
-    dropstarts.forEach(addHoverEvents);
-    dropends.forEach(addHoverEvents);
-  } else {
-
-    // Remove hover events from dropdowns
-    dropdowns.forEach(removeHoverEvents);
-    dropstarts.forEach(removeHoverEvents);
-    dropends.forEach(removeHoverEvents);
-  }
-};
-
-// Function to handle resizing
-const handleResize = () => {
-  const dropdowns = document.querySelectorAll('.navbar .dropdown');
-  const dropstarts = document.querySelectorAll('.navbar .dropstart');
-  const dropends = document.querySelectorAll('.navbar .dropend');
-
-  // Remove hover events before rechecking window size
-  dropdowns.forEach(removeHoverEvents);
-  dropstarts.forEach(removeHoverEvents);
-  dropends.forEach(removeHoverEvents);
-
-  // Re-apply hover events based on window size
-  handleNavbarEvents();
-};
-
-// Call the function on resize event and initially
-window.addEventListener('resize', handleResize);
-handleNavbarEvents();
-
-
-
-// ======= Coming Soon Countdown =======
-const countdownInit = () => {
-
-  // Get the current year
-  const currentYear = new Date().getFullYear();
-  const nextYear = currentYear + 1;
-  const launchDate = new Date(`December 31, ${nextYear} 23:59:59`).getTime();
-
-  // Change this "December 31, 2024 23:59:59" to your your website launch date
-  // const launchDate = new Date("December 31, 2024 23:59:59").getTime();
-
-
-  const x = setInterval(function () {
-
-    const now = new Date().getTime();
-      
-    const distance = launchDate - now;
-      
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      
-    // Output the result in an element with id
-    const daysEl = document.getElementById("days");
-    const hoursEl = document.getElementById("hours");
-    const minutesEl = document.getElementById("minutes");
-    const secondsEl = document.getElementById("seconds");
-    if (daysEl) {
-      daysEl.innerText = days;
-    }
-    if (hoursEl) {
-      hoursEl.innerText = hours;
-    }
-    if (minutesEl) {
-      minutesEl.innerText = minutes;
-    }
-    if (secondsEl) {
-      secondsEl.innerText = seconds;
-    }
-      
-    // If the count down is finished, write some text
-    if (distance < 0) {
-      clearInterval(x);
-      document.querySelector(".countdown").innerText = "Launched!";
-    }
-  }, 1000);
-};
-document.addEventListener('DOMContentLoaded', countdownInit);
-
-
-
-// ======= WhatsApp Form Submission =======
-  document.getElementById("whatsapp-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    // Get input values
-    var name = document.getElementById("name").value.trim();
-    var message = document.getElementById("message").value.trim();
-
-    // Format WhatsApp message
-    var whatsappMessage = `Hello, my name is ${name}. ${message}`;
-    var phoneNumber = "7396439736"; // Replace with your number
-
-    // Create WhatsApp link
-    var url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-
-    // Open WhatsApp in new tab
-    window.open(url, "_blank");
-  });
-
-/* Page Loader */
-var loader = document.getElementById("loader");
-window.addEventListener("load", function () {
-  setTimeout(function () {
-    loader.classList.add("hide");
-    document.body.classList.remove("loading");
-  }, 1000); // Delay of 1 second (adjust as needed)
-});
-document.body.classList.add("loading");
-
-
-const initSlider = () => {
-    const imageList = document.querySelector(".slider-wrapper .image-list");
-    const slideButtons = document.querySelectorAll(".slider-wrapper .slide-button");
-    const sliderScrollbar = document.querySelector(".container .slider-scrollbar");
-    const scrollbarThumb = sliderScrollbar.querySelector(".scrollbar-thumb");
-    const maxScrollLeft = imageList.scrollWidth - imageList.clientWidth;
-    
-    // Handle scrollbar thumb drag
-    scrollbarThumb.addEventListener("mousedown", (e) => {
-        const startX = e.clientX;
-        const thumbPosition = scrollbarThumb.offsetLeft;
-        const maxThumbPosition = sliderScrollbar.getBoundingClientRect().width - scrollbarThumb.offsetWidth;
-        
-        // Update thumb position on mouse move
-        const handleMouseMove = (e) => {
-            const deltaX = e.clientX - startX;
-            const newThumbPosition = thumbPosition + deltaX;
-
-            // Ensure the scrollbar thumb stays within bounds
-            const boundedPosition = Math.max(0, Math.min(maxThumbPosition, newThumbPosition));
-            const scrollPosition = (boundedPosition / maxThumbPosition) * maxScrollLeft;
-            
-            scrollbarThumb.style.left = `${boundedPosition}px`;
-            imageList.scrollLeft = scrollPosition;
-        }
-
-        // Remove event listeners on mouse up
-        const handleMouseUp = () => {
-            document.removeEventListener("mousemove", handleMouseMove);
-            document.removeEventListener("mouseup", handleMouseUp);
-        }
-
-        // Add event listeners for drag interaction
-        document.addEventListener("mousemove", handleMouseMove);
-        document.addEventListener("mouseup", handleMouseUp);
-    });
-
-    // Slide images according to the slide button clicks
-    slideButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            const direction = button.id === "prev-slide" ? -1 : 1;
-            const scrollAmount = imageList.clientWidth * direction;
-            imageList.scrollBy({ left: scrollAmount, behavior: "smooth" });
-        });
-    });
-
-     // Show or hide slide buttons based on scroll position
-    const handleSlideButtons = () => {
-        slideButtons[0].style.display = imageList.scrollLeft <= 0 ? "none" : "flex";
-        slideButtons[1].style.display = imageList.scrollLeft >= maxScrollLeft ? "none" : "flex";
-    }
-
-    // Update scrollbar thumb position based on image scroll
-    const updateScrollThumbPosition = () => {
-        const scrollPosition = imageList.scrollLeft;
-        const thumbPosition = (scrollPosition / maxScrollLeft) * (sliderScrollbar.clientWidth - scrollbarThumb.offsetWidth);
-        scrollbarThumb.style.left = `${thumbPosition}px`;
-    }
-
-    // Call these two functions when image list scrolls
-    imageList.addEventListener("scroll", () => {
-        updateScrollThumbPosition();
-        handleSlideButtons();
-    });
-}
-
-window.addEventListener("resize", initSlider);

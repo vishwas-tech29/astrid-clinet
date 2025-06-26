@@ -54,7 +54,7 @@
             
             <!-- If you plan to use an image logo, uncomment this if it is commented-->
              
-                    <img class="logo dark img-fluid" src="/assets/images/DP_02.jpg" alt="Astrid Dermatology and Cosmetology Clinic Logo" />
+                    <img class="logo dark img-fluid" src="/assets/images/image-removebg-preview (1).png" alt="Astrid Dermatology and Cosmetology Clinic Logo" />
                    
                     
                   
@@ -86,13 +86,13 @@
             <div class="offcanvas-body align-items-lg-center">
               
               
-              <ul class="navbar-nav nav me-auto ps-lg-5 mb-2 mb-lg-0">
+              <ul class="navbar-nav nav me-auto ps-lg-5 mb-2 mb-lg-0 ">
                 <li class="nav-item"><a class="nav-link scroll-link active" aria-current="page" href="#home">Home</a></li>
                 <li class="nav-item"><a class="nav-link scroll-link" href="#about">About</a></li>
                 <!-- <li class="nav-item"><a class="nav-link scroll-link" href="#pricing">Pricing</a></li> -->
                 <li class="nav-item"><a class="nav-link scroll-link" href="#how-it-works">How It Works</a></li>
                 <li class="nav-item"><a class="nav-link scroll-link" href="#services">Services</a></li>
-                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown <i class="bi bi-chevron-down"></i></a>
+                <!-- <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown <i class="bi bi-chevron-down"></i></a> -->
                   
                   <!-- <ul class="dropdown-menu">
                     <li><a class="nav-link scroll-link dropdown-item" href="#">Multipages</a></li>
@@ -128,10 +128,11 @@
           </div>
           <!-- End offcanvas-->
           
-          <div class="ms-auto w-auto">
+          <div class=" ms-auto w-auto">
             
             
-            <div class="header-social d-flex align-items-center gap-1"><a class="btn btn-primary py-2" href="#contact">Get Started</a>
+            <div class="header-social d-flex align-items-center gap-1">
+              <a class="btn btn-primary py-2" href="#" data-bs-toggle="modal" data-bs-target="#bookAppointmentModal">Book Appointment</a>
               
               <button class="fbs__net-navbar-toggler justify-content-center align-items-center ms-auto" data-bs-toggle="offcanvas" data-bs-target="#fbs__net-navbars" aria-controls="fbs__net-navbars" aria-label="Toggle navigation" aria-expanded="false">
                 <svg class="fbs__net-icon-menu" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -157,33 +158,150 @@
         
         
         <!-- ======= Hero =======-->
-        <section class="hero__v6 section" id="home">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-6 mb-4 mb-lg-0">
-                <div class="row">
-                  <div class="col-lg-11"><span class="hero-subtitle text-uppercase" data-aos="fade-up" data-aos-delay="0">Welcome to Astrid Dermatology and Cosmetology Clinic</span>
-                    <h1 class="hero-title mb-3" data-aos="fade-up" data-aos-delay="100"></h1>
-                    <p class="hero-description mb-4 mb-lg-5" data-aos="fade-up" data-aos-delay="200">We specialize in skin and hair aesthetics, offering state-of-the-art treatments to enhance appearance and promote healthy skin and hair. Additionally, we provide expert care for a range of core dermatological issues, including skin diseases and hair conditions, ensuring holistic care and optimal results.</p>
-                    <div class="cta d-flex gap-2 mb-4 mb-lg-5" data-aos="fade-up" data-aos-delay="300"><a class="btn" href="#">Get Started Now</a><a class="btn btn-white-outline" href="#">Learn More 
-                        <svg class="lucide lucide-arrow-up-right" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <path d="M7 7h10v10"></path>
-                          <path d="M7 17 17 7"></path>
-                        </svg></a></div>
-                    <!-- <div class="logos mb-4" data-aos="fade-up" data-aos-delay="400"><span class="logos-title text-uppercase mb-4 d-block">Trusted by major companies worldwide</span>
-                      <div class="logos-images d-flex gap-4 align-items-center"><img class="img-fluid js-img-to-inline-svg" src="assets/images/logo/actual-size/logo-air-bnb__black.svg" alt="Company 1" style="width: 110px;"><img class="img-fluid js-img-to-inline-svg" src="assets/images/logo/actual-size/logo-ibm__black.svg" alt="Company 2" style="width: 80px;"><img class="img-fluid js-img-to-inline-svg" src="assets/images/logo/actual-size/logo-google__black.svg" alt="Company 3" style="width: 110px;"></div>
-                    </div> -->
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 d-flex justify-content-center align-items-center">
-                <div class="hero-img"><img class="img-card img-fluid" src="https://th.bing.com/th/id/OIP.T4Cw-6rmxKAKdADy02wAWwHaE4?rs=1&pid=ImgDetMain&cb=idpwebp2&o=7&rm=3" alt="Image card" data-aos="fade-down" data-aos-delay="1000"><img class="img-main img-fluid rounded-4" src="/assets/images/first.jpeg" alt="Hero Image" data-aos="fade-in" data-aos-delay="500"></div>
+        <section class="hero__v1 section" id="home">
+          <!-- <div class="container"> -->
+              <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+
+  <div class="carousel-inner">
+
+    <!-- Slide 1 -->
+    <div class="carousel-item active">
+      <img src="/assets/images/first.jpeg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>First Slide Label</h5>
+        <p>Some representative placeholder content for the first slide.</p>
+        <a href="https://wa.me/91XXXXXXXXXX?text=I%20would%20like%20to%20book%20an%20appointment" 
+           target="_blank" 
+           class="btn btn-success mt-3">
+          Book Appointment on WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="carousel-item">
+      <img src="/assets/images/first.jpeg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Second Slide Label</h5>
+        <p>Some representative placeholder content for the second slide.</p>
+        <a href="https://wa.me/91XXXXXXXXXX?text=Hello,%20I%20want%20to%20book%20a%20session" 
+           target="_blank" 
+           class="btn btn-success mt-3">
+          Book Appointment on WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="carousel-item">
+      <img src="/assets/images/first.jpeg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Third Slide Label</h5>
+        <p>Some representative placeholder content for the third slide.</p>
+        <a href="https://wa.me/91XXXXXXXXXX?text=I%20am%20interested%20in%20your%20services" 
+           target="_blank" 
+           class="btn btn-success mt-3">
+          Book Appointment on WhatsApp
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+          </div>  
+          </section>
+        <!-- End Hero-->
+         
+        
+       <!-- ======= Services =======-->
+        <section>
+          <div class="container py-5">
+    <div class="row text-center justify-content-center">
+
+      <div class="col-md-3 mb-4 ">
+        <div class="card card-custom">
+          <div class="icon-3"><img src="/assets/images/skin-care.png" alt="" width="100" height="100"></div>
+          <h2>Skin</h2>
+          <p>Skin Care Treatments</p>
+          <!-- <a href="#book" class="btn btn-custom">Book Now</a> -->
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-4">
+        <div class="card card-custom">
+          <div class="icon-3"><img src="/assets/images/hair.png" alt="" width="100" height="100"></div>
+          <h2>Hair</h2>
+          <p>Hair Care Treatment</p>
+          <!-- <a href="#book" class="btn btn-custom">Book Now</a> -->
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-4">
+        <div class="card card-custom">
+          <div class="icon-3"><img src="/assets/images/laser.png" alt="" width="100" height="100"></div>
+          <h2><span class="highlight">You</span></h2>
+          <p><span class="highlight">Transforming You</span></p>
+          <!-- <a href="#book" class="btn btn-custom">Book Now</a> -->
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-4">
+        <div class="card card-custom">
+          <div class="icon-3"><img src="/assets/images/body-contouring.png" alt="" width="100" height="100"></div>
+          <h2>Laser</h2>
+          <p>Body Contour</p>
+          <!-- <a href="#book" class="btn btn-custom">Book Now</a> -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+        </section>
+ 
+        <!-- End Services-->
+
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col md-8 text-center">
+              <h1 class="mb-4" data-aos="fade-up" data-aos-delay="0">Quality and Affordable Skin and Hair Clinic in Hyderabad</h1>
+              <p data-aos="fade-up" data-aos-delay="100">We all deserve to feel confident and radiant in our own skin and hair. At Astrid, that’s our mission! Recognized by the Time Health Survey as the Best skin clinic in Hyderabad, we’re dedicated to providing exceptional care that addresses your specific concerns and helps you achieve your beauty goals.
+
+Our team is the heart of Astrid. We have Hyderabad’s best and most experienced dermatologists and cosmetologists, all board-certified for your peace of mind. This ensures you receive the most effective and personalized treatment plan possible, so you can achieve your healthiest, most beautiful skin and hair. As a trusted hair clinic in Hyderabad, we focus on delivering solutions that bring back your confidence with every session.
+
+</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col md-8 text-center">
+              <div class="text-center">
+                
+                <h2 class="mb-4" data-aos="fade-up" data-aos-delay="0">
+                  We offer a wide range of services to cater to your skin and hair needs:
+                </h2>
+                <p data-aos="fade-up" data-aos-delay="100"> We specialize in skin and hair aesthetics, offering state-of-the-art treatments to enhance appearance and promote healthy skin and hair. Additionally, we provide expert care for a range of core dermatological issues, including skin diseases and hair conditions, ensuring holistic care and optimal results.</p>
               </div>
             </div>
           </div>
-          <!-- End Hero-->
-        </section>
-        <!-- End Hero-->
+        </div>
         
         <!-- ======= About =======-->
         <section class="about__v4 section" id="about">
@@ -213,7 +331,7 @@
                   <div class="mission-statement p-4 rounded-4 d-flex gap-4" data-aos="fade-up" data-aos-delay="100">
                     <div class="mission-icon text-center rounded-circle"><i class="bi bi-lightbulb fs-4"></i></div>
                     <div>
-                      <h3 class="text-uppercase fw-bold">My journey int0</h3>
+                      <h3 class="text-uppercase fw-bold">My journey into</h3>
                       <p class="fs-5 mb-0">In today’s world, while many people work hard to keep up with their skin and hair care routines, some concerns require more than just basic care. At Astrid Dermatology and Cosmetology Clinic, we recognize the importance of your skin, and we are committed to offering personalized treatments tailored to your unique needs.</p>
                     </div>
                   </div>
@@ -225,7 +343,7 @@
         <!-- End About-->
         
         <!-- ======= Features =======-->
-        <section class="section features__v2" id="features">
+        <!-- <section class="section features__v2" id="features">
           <div class="container">
             <div class="row">
               <div class="col-12">
@@ -277,7 +395,7 @@
               </div>
             </div>
           </div>
-        </section>
+        </section> -->
         <!-- End Features-->
         
         <!-- ======= Pricing =======-->
@@ -949,9 +1067,24 @@ hedlth</p>
         
       </main>
     </div>
+    <!-- Chatbot Widget Start -->
+<div id="chatbot-widget" style="position:fixed;bottom:32px;right:32px;z-index:9999;">
+  <button id="chatbot-toggle" style="background:#215C5C;color:#fff;border:none;border-radius:50%;width:56px;height:56px;box-shadow:0 2px 8px rgba(33,92,92,0.18);font-size:2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+    <span>&#128172;</span>
+  </button>
+  <div id="chatbot-window" style="display:none;flex-direction:column;width:340px;max-width:90vw;height:420px;box-shadow:0 4px 24px rgba(33,92,92,0.18);background:#fff;border-radius:16px;overflow:hidden;position:absolute;bottom:70px;right:0;">
+    <div style="background:#215C5C;color:#fff;padding:1rem;font-weight:600;">Astrid Clinic Chatbot <button id="chatbot-close" style="float:right;background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;">&times;</button></div>
+    <div id="chatbot-messages" style="flex:1;padding:1rem;overflow-y:auto;font-size:1rem;"></div>
+    <form id="chatbot-form" style="display:flex;border-top:1px solid #eee;">
+      <input id="chatbot-input" type="text" placeholder="Ask a question..." autocomplete="off" style="flex:1;padding:0.75rem;border:none;font-size:1rem;outline:none;">
+      <button type="submit" style="background:#215C5C;color:#fff;border:none;padding:0 1rem;font-size:1.2rem;">&#9658;</button>
+    </form>
+  </div>
+</div>
+<!-- Chatbot Widget End -->
     
     <!-- ======= Back to Top =======-->
-    <button id="back-to-top"><i class="bi bi-arrow-up-short"></i></button>
+    <!-- <button id="back-to-top"><i class="bi bi-arrow-up-short"></i></button> -->
     <!-- End Back to top-->
     
     <!-- ======= Javascripts =======-->
@@ -992,6 +1125,7 @@ hedlth</p>
 </script>
 
 
+
 <script src="script.js"></script>
 
     <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
@@ -1004,6 +1138,6 @@ hedlth</p>
     <script src="assets/vendors/purecounter/purecounter.js"></script>
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/send_email.js"></script>
-    <!-- End JavaScripts-->
+    <!-- <script src="//code.tidio.co/ndj3e3ppblbuaphyvbldqtlieyjc3rex.js" async></script> -->
   </body>
 </html>
