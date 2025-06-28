@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Skin Care Treatments - Astrid Dermatology & Cosmetology Clinic</title>
     <!-- ======= Google Font =======-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- End Google Font-->
     
     <!-- ======= Styles =======-->
@@ -16,6 +16,7 @@
     <link href="assets/vendors/glightbox/glightbox.min.css" rel="stylesheet">
     <link href="assets/vendors/swiper/swiper-bundle.min.css" rel="stylesheet">
     <link href="assets/vendors/aos/aos.css" rel="stylesheet">
+    <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" rel="stylesheet">
     <!-- End Styles-->
     
     <!-- ======= Theme Style =======-->
@@ -30,134 +31,1508 @@
       document.documentElement.setAttribute('data-bs-theme', storedTheme);
       })();
     </script>
-       <script src="script.js" defer></script>
     
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --tertiary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f5576c;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background-color: #f9f9ff;
+        }
+        
+        /* Skincare Page Specific Styles */
+        .skincare-hero {
+            background: var(--primary-gradient);
+            min-height: 80vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+        
+        .skincare-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/assets/images/hero-bg-1-min.jpg') center/cover;
+            opacity: 0.2;
+            z-index: 1;
+        }
+        
+        .skincare-hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+        
+        .treatment-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0);
+        }
+        
+        .treatment-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .treatment-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.7s ease-in-out;
+        }
+        
+        .treatment-card:hover::after {
+            left: 100%;
+        }
+        
+        .treatment-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .treatment-card:hover .treatment-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        .benefits-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .benefits-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .benefits-list li:hover {
+            transform: translateX(5px);
+            color: var(--primary-color);
+        }
+        
+        .benefits-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .price-card {
+            background: var(--primary-gradient);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .price-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        .price-amount {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #fff, #f8f9fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .consultation-section {
+            background: var(--secondary-gradient);
+            color: white;
+            padding: 4rem 0;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-element:nth-child(1) {
+            width: 50px;
+            height: 50px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .floating-element:nth-child(2) {
+            width: 30px;
+            height: 30px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+        
+        .floating-element:nth-child(3) {
+            width: 40px;
+            height: 40px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .before-after-slider {
+            background: #f8f9fa;
+            padding: 3rem 0;
+            margin: 3rem 0;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--primary-color);
+            font-family: serif;
+            opacity: 0.3;
+        }
+        
+        .expert-section {
+            background: var(--tertiary-gradient);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .expert-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .expert-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .expert-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            border: 4px solid white;
+            object-fit: cover;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .expert-card:hover .expert-image {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #667eea, #f093fb, #00f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% auto;
+            animation: gradientText 5s ease infinite;
+        }
+        
+        @keyframes gradientText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .floating-badge {
+            animation: floatBadge 4s ease-in-out infinite;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .floating-badge:hover {
+            animation: floatBadgeHover 0.5s ease-in-out;
+            transform: scale(1.05);
+        }
+        
+        @keyframes floatBadge {
+            0%,100% { transform: translateY(0);}
+            50% { transform: translateY(-10px);}
+        }
+        
+        @keyframes floatBadgeHover {
+            0%,100% { transform: scale(1.05);}
+            50% { transform: scale(1.1);}
+        }
+        
+        .skincare-slider-section .slider-wrapper {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .skincare-slider-section .slider-container {
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            white-space: nowrap;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .skincare-slider-section .slider-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .skincare-slider-section .image-list {
+            display: flex;
+            align-items: center;
+            transition: transform 0.6s cubic-bezier(.25,1.25,.5,1);
+        }
+        
+        .skincare-slider-section .slide-button {
+            width: 48px;
+            height: 48px;
+            font-size: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+        
+        .skincare-slider-section .slide-button:hover {
+            opacity: 1;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .image-item {
+            width: 260px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .image-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .modal-image {
+            max-height: 80vh;
+            object-fit: contain;
+            width: 100%;
+        }
+        
+        /* Pulse animation for CTA buttons */
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255,255,255,0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+        }
+        
+        /* Loading animation */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Floating action button */
+        .floating-action-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 5px 25px rgba(102, 126, 234, 0.6);
+            z-index: 100;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+        
+        .floating-action-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.8);
+        }
+        
+        /* Parallax effect */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        /* Animated underline */
+        .animated-underline {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .animated-underline::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background: currentColor;
+            transition: width 0.3s ease;
+        }
+        
+        .animated-underline:hover::after {
+            width: 100%;
+        }
+        
+        /* Scroll progress bar */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background: transparent;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        
+        .progress-bar {
+            height: 5px;
+            background: var(--primary-gradient);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--secondary-gradient);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            box-shadow: 0 5px 25px rgba(245, 87, 108, 0.6);
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(245, 87, 108, 0.8);
+        }
+        
+        /* Treatment cards grid */
+        .treatments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        /* Animated counter */
+        .counter {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        /* Interactive map */
+        #clinic-map {
+            height: 400px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        /* Form animations */
+        .form-control:focus {
+            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+            border-color: var(--primary-color);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .skincare-hero {
+                min-height: 100vh;
+                text-align: center;
+            }
+            
+            .skincare-hero-content {
+                padding-top: 80px;
+            }
+            
+            .floating-action-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .back-to-top {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+                bottom: 80px;
+                right: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-        <div class="site-wrap">
-      
-      
-      <!-- ======= Header =======-->
-      <header class="fbs__net-navbar navbar navbar-expand-lg dark" aria-label="freebootstrap.net navbar">
-        <div class="container d-flex align-items-center justify-content-between">
-          
-          
-          <!-- Start Logo-->
-          <a class="navbar-brand w-auto" href="index.html">
-            <!-- If you use a text logo, uncomment this if it is commented-->
-            <!-- Vertex--> 
-            
-            <!-- If you plan to use an image logo, uncomment this if it is commented-->
-             
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="site-wrap">
+        <!-- ======= Header =======-->
+        <header class="fbs__net-navbar navbar navbar-expand-lg dark" aria-label="freebootstrap.net navbar">
+            <div class="container d-flex align-items-center justify-content-between">
+                <!-- Start Logo-->
+                <a class="navbar-brand w-auto" href="index.html">
                     <img class="logo dark img-fluid" src="/assets/images/image-removebg-preview (1).png" alt="Astrid Dermatology and Cosmetology Clinic Logo" />
-                   
+                    <img class="logo light img-fluid" src="/assets/images/DP_02.jpg" alt="Astrid Clinic Logo">
+                </a>
+                <!-- End Logo-->
+                
+                <!-- Start offcanvas-->
+                <div class="offcanvas offcanvas-start w-75" id="fbs__net-navbars" tabindex="-1" aria-labelledby="fbs__net-navbarsLabel">
+                    <div class="offcanvas-header">
+                        <div class="offcanvas-header-logo">
+                            <a class="logo-link" id="fbs__net-navbarsLabel" href="index.html"></a>
+                        </div>
+                        <button class="btn-close btn-close-black" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
                     
-                  
-                <img class="logo light img-fluid" src="/assets/images/DP_02.jpg" alt="FreeBootstrap.net image placeholder w-20 h-20"></a>
-            
-            
-            </a>
-          <!-- End Logo-->
-          <!-- Start offcanvas-->
-          <div class="offcanvas offcanvas-start w-75" id="fbs__net-navbars" tabindex="-1" aria-labelledby="fbs__net-navbarsLabel">
-            
-            
-            <div class="offcanvas-header">
-              <div class="offcanvas-header-logo">
-                <!-- If you use a text logo, uncomment this if it is commented-->
+                    <div class="offcanvas-body align-items-lg-center">
+                        <ul class="navbar-nav nav me-auto ps-lg-5 mb-2 mb-lg-0">
+                            <li class="nav-item"><a class="nav-link scroll-link animated-underline" href="index.html#home">Home</a></li>
+                            <li class="nav-item"><a class="nav-link scroll-link animated-underline" href="index.html#about">About</a></li>
+                            <li class="nav-item"><a class="nav-link scroll-link animated-underline" href="index.html#how-it-works">How It Works</a></li>
+                            <li class="nav-item"><a class="nav-link scroll-link active animated-underline" href="index.html#services">Services</a></li>
+                            <li class="nav-item"><a class="nav-link scroll-link animated-underline" href="index.html#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- End offcanvas-->
                 
-                <!-- h5#fbs__net-navbarsLabel.offcanvas-title Vertex-->
-                
-                <!-- If you plan to use an image logo, uncomment this if it is commented-->
-                <a class="logo-link" id="fbs__net-navbarsLabel" href="index.html">
-                  
-                  
-                  
-                
-              </div>
-              <button class="btn-close btn-close-black" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <div class="ms-auto w-auto">
+                    <div class="header-social d-flex align-items-center gap-1">
+                        <a class="btn btn-primary py-2 pulse-animation" href="#" data-bs-toggle="modal" data-bs-target="#bookAppointmentModal">Book Appointment</a>
+                        
+                        <button class="fbs__net-navbar-toggler justify-content-center align-items-center ms-auto" data-bs-toggle="offcanvas" data-bs-target="#fbs__net-navbars" aria-controls="fbs__net-navbars" aria-label="Toggle navigation" aria-expanded="false">
+                            <svg class="fbs__net-icon-menu" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="21" x2="3" y1="6" y2="6"></line>
+                                <line x1="15" x2="3" y1="12" y2="12"></line>
+                                <line x1="17" x2="3" y1="18" y2="18"></line>
+                            </svg>
+                            <svg class="fbs__net-icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 6 6 18"></path>
+                                <path d="m6 6 12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             </div>
-            
-            <div class="offcanvas-body align-items-lg-center">
-              
-              
-              <ul class="navbar-nav nav me-auto ps-lg-5 mb-2 mb-lg-0 ">
-                <li class="nav-item"><a class="nav-link scroll-link active" aria-current="page" href="#home">Home</a></li>
-                <li class="nav-item"><a class="nav-link scroll-link" href="#about">About</a></li>
-                <!-- <li class="nav-item"><a class="nav-link scroll-link" href="#pricing">Pricing</a></li> -->
-                <li class="nav-item"><a class="nav-link scroll-link" href="#how-it-works">How It Works</a></li>
-                <li class="nav-item"><a class="nav-link scroll-link" href="#services">Services</a></li>
-                <!-- <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown <i class="bi bi-chevron-down"></i></a> -->
-                  
-                  <!-- <ul class="dropdown-menu">
-                    <li><a class="nav-link scroll-link dropdown-item" href="#">Multipages</a></li>
-                    <li><a class="nav-link scroll-link dropdown-item" href="#services">Services</a></li> -->
-                    <!-- <li><a class="nav-link scroll-link dropdown-item" href="#pricing">Pricing</a></li> -->
-                    <!-- <li class="nav-item dropstart"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropstart <i class="bi bi-chevron-right"></i></a> -->
-                      <!-- <ul class="dropdown-menu">
-                        <li><a class="nav-link scroll-link dropdown-item" href="#services">Services</a></li> -->
-                        <!-- <li><a class="nav-link scroll-link dropdown-item" href="#pricing">Pricing</a></li> -->
-                        <!-- <li class="nav-item dropstart"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropstart <i class="bi bi-chevron-right"></i></a> -->
-                          <!-- <ul class="dropdown-menu">
-                            <li><a class="nav-link scroll-link dropdown-item" href="#services">Services</a></li> -->
-                            <!-- <li><a class="nav-link scroll-link dropdown-item" href="#pricing">Pricing</a></li> -->
-                            <!-- <li><a class="nav-link scroll-link dropdown-item" href="#">Something else here</a></li>
-                            <li class="nav-item dropend"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropend <i class="bi bi-chevron-right"></i></a>
-                              <ul class="dropdown-menu">
-                                <li><a class="nav-link scroll-link dropdown-item" href="#services">Services</a></li> -->
-                                <!-- <li><a class="nav-link scroll-link dropdown-item" href="#pricing">Pricing</a></li> -->
-                                <!-- <li><a class="nav-link scroll-link dropdown-item" href="#">Something else here</a></li>
-                              </ul>
+        </header>
+        <!-- End Header-->
+
+        <!-- ======= Skincare Hero Section =======-->
+        <section class="skincare-hero d-flex align-items-center parallax" style="background-image: url('/assets/images/hero-bg-1-min.jpg');">
+            <div class="floating-elements">
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+            </div>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 skincare-hero-content" data-aos="fade-right" data-aos-delay="200">
+                        <h1 class="display-4 fw-bold mb-4">Transform Your Skin</h1>
+                        <h2 class="h3 mb-4 gradient-text">Advanced Skin Care Treatments</h2>
+                        <p class="lead mb-4">Discover the latest in dermatological technology and expert care to achieve your healthiest, most radiant skin.</p>
+                        <div class="d-flex gap-3 flex-wrap">
+                            <a href="https://wa.me/917396439736?text=I'm interested in skin care treatments" 
+                               target="_blank" 
+                               class="btn btn-light btn-lg pulse-animation">
+                                <i class="bi bi-whatsapp me-2"></i>Get Consultation
+                            </a>
+                            <a href="tel:+917396439736" class="btn btn-outline-light btn-lg">
+                                <i class="bi bi-telephone-fill me-2"></i>Call Now
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" data-aos="fade-left" data-aos-delay="400">
+                        <img src="/assets/images/skin-care.png" alt="Skin Care" class="img-fluid floating-image" style="max-width: 400px;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======= Skincare Information Section =======-->
+        <section class="skincare-info-section py-5 position-relative">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+                        <h2 class="display-5 fw-bold mb-3 gradient-text">What is Professional Skincare?</h2>
+                        <p class="lead mb-4">
+                            Professional skincare goes beyond daily cleansing and moisturizing. It involves expert assessment, advanced treatments, and personalized care to address your unique skin needs. At <strong>Astrid Dermatology & Cosmetology Clinic</strong>, we combine science, technology, and artistry to help you achieve healthy, glowing skin at every age.
+                        </p>
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-3 d-flex align-items-start">
+                                <span class="icon animated-icon me-3"><i class="bi bi-stars fs-3"></i></span>
+                                <span>Personalized skin analysis and treatment plans</span>
                             </li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                   -->
-                </li>
-                <li class="nav-item"><a class="nav-link scroll-link" href="#contact">Contact</a></li>
-              </ul>
-              
+                            <li class="mb-3 d-flex align-items-start">
+                                <span class="icon animated-icon me-3"><i class="bi bi-droplet-half fs-3"></i></span>
+                                <span>Advanced therapies for acne, aging, pigmentation, and more</span>
+                            </li>
+                            <li class="mb-3 d-flex align-items-start">
+                                <span class="icon animated-icon me-3"><i class="bi bi-shield-check fs-3"></i></span>
+                                <span>FDA-approved, safe, and effective procedures</span>
+                            </li>
+                            <li class="mb-3 d-flex align-items-start">
+                                <span class="icon animated-icon me-3"><i class="bi bi-emoji-smile fs-3"></i></span>
+                                <span>Long-term support for lasting results and confidence</span>
+                            </li>
+                        </ul>
+                        <div class="d-flex gap-3 flex-wrap">
+                            <a href="https://wa.me/917396439736?text=I'm interested in skin care treatments" target="_blank" class="btn btn-primary btn-lg pulse-animation">
+                                <i class="bi bi-whatsapp me-2"></i>Get Expert Advice
+                            </a>
+                            <a href="tel:+917396439736" class="btn btn-outline-primary btn-lg">
+                                <i class="bi bi-telephone-fill me-2"></i>Call Now
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+                        <div class="info-image-wrap position-relative">
+                            <img src="/assets/images/skin-care.png" alt="Professional Skincare" class="img-fluid rounded-4 shadow-lg floating-image" style="max-width: 400px;">
+                            <div class="floating-badge position-absolute top-0 start-0 translate-middle-y bg-white shadow rounded-pill px-4 py-2" style="left: 0; top: 20%;">
+                                <i class="bi bi-award-fill text-warning me-2"></i> Best Clinic Award
+                            </div>
+                            <div class="floating-badge position-absolute bottom-0 end-0 translate-middle-y bg-white shadow rounded-pill px-4 py-2" style="right: 0; bottom: 20%;">
+                                <i class="bi bi-shield-check text-success me-2"></i> FDA Approved
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class=" ms-auto w-auto">
-            
-            
-            <div class="header-social d-flex align-items-center gap-1">
-              <a class="btn btn-primary py-2" href="#" data-bs-toggle="modal" data-bs-target="#bookAppointmentModal">Book Appointment</a>
-              
-              <button class="fbs__net-navbar-toggler justify-content-center align-items-center ms-auto" data-bs-toggle="offcanvas" data-bs-target="#fbs__net-navbars" aria-controls="fbs__net-navbars" aria-label="Toggle navigation" aria-expanded="false">
-                <svg class="fbs__net-icon-menu" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="21" x2="3" y1="6" y2="6"></line>
-                  <line x1="15" x2="3" y1="12" y2="12"></line>
-                  <line x1="17" x2="3" y1="18" y2="18"></line>
-                </svg>
-                <svg class="fbs__net-icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M18 6 6 18"></path>
-                  <path d="m6 6 12 12"></path>
-                </svg>
-              </button>
-              
+            <!-- Floating animated elements -->
+            <div class="floating-elements">
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
             </div>
-            
-          </div>
+        </section>
+
+        <!-- ======= Treatments Section ======= -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-lg-8 mx-auto text-center">
+                        <h2 class="fw-bold mb-3 gradient-text" data-aos="fade-up">Our Signature Treatments</h2>
+                        <p class="lead" data-aos="fade-up" data-aos-delay="100">Customized solutions for all skin types and concerns</p>
+                    </div>
+                </div>
+                
+                <div class="treatments-grid">
+                    <!-- Treatment 1 -->
+                    <div class="treatment-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="treatment-icon">
+                            <i class="bi bi-droplet"></i>
+                        </div>
+                        <h3>HydraFacial</h3>
+                        <p>A revolutionary skin treatment that cleanses, extracts, and hydrates the skin with patented vortex technology.</p>
+                        <ul class="benefits-list">
+                            <li>Deep cleansing and exfoliation</li>
+                            <li>Extraction without discomfort</li>
+                            <li>Hydration and antioxidant protection</li>
+                            <li>Instant glow and results</li>
+                        </ul>
+                        <div class="price-card mt-3">
+                            <div class="price-amount">₹3,500</div>
+                            <div>per session</div>
+                        </div>
+                        <a href="#bookAppointmentModal" data-bs-toggle="modal" class="btn btn-outline-primary w-100 mt-3">Book Now</a>
+                    </div>
+                    
+                    <!-- Treatment 2 -->
+                    <div class="treatment-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="treatment-icon">
+                            <i class="bi bi-lightning-charge"></i>
+                        </div>
+                        <h3>Laser Skin Resurfacing</h3>
+                        <p>Advanced laser technology to reduce wrinkles, scars, and uneven skin tone by promoting new skin growth.</p>
+                        <ul class="benefits-list">
+                            <li>Reduces fine lines and wrinkles</li>
+                            <li>Improves skin texture and tone</li>
+                            <li>Minimizes pore appearance</li>
+                            <li>Stimulates collagen production</li>
+                        </ul>
+                        <div class="price-card mt-3">
+                            <div class="price-amount">₹8,000</div>
+                            <div>per session</div>
+                        </div>
+                        <a href="#bookAppointmentModal" data-bs-toggle="modal" class="btn btn-outline-primary w-100 mt-3">Book Now</a>
+                    </div>
+                    
+                    <!-- Treatment 3 -->
+                    <div class="treatment-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="treatment-icon">
+                            <i class="bi bi-brightness-high"></i>
+                        </div>
+                        <h3>Chemical Peels</h3>
+                        <p>Controlled application of chemical solutions to improve skin texture by removing damaged outer layers.</p>
+                        <ul class="benefits-list">
+                            <li>Reduces acne and acne scars</li>
+                            <li>Diminishes hyperpigmentation</li>
+                            <li>Smooths rough skin texture</li>
+                            <li>Stimulates collagen production</li>
+                        </ul>
+                        <div class="price-card mt-3">
+                            <div class="price-amount">₹2,500</div>
+                            <div>per session</div>
+                        </div>
+                        <a href="#bookAppointmentModal" data-bs-toggle="modal" class="btn btn-outline-primary w-100 mt-3">Book Now</a>
+                    </div>
+                    
+                    <!-- Treatment 4 -->
+                    <div class="treatment-card" data-aos="fade-up" data-aos-delay="500">
+                        <div class="treatment-icon">
+                            <i class="bi bi-magic"></i>
+                        </div>
+                        <h3>Microdermabrasion</h3>
+                        <p>A non-chemical, non-invasive procedure that uses a spray of microcrystals to remove the outermost layer of skin.</p>
+                        <ul class="benefits-list">
+                            <li>Reduces fine lines and wrinkles</li>
+                            <li>Improves skin elasticity</li>
+                            <li>Minimizes pore size</li>
+                            <li>Enhances product absorption</li>
+                        </ul>
+                        <div class="price-card mt-3">
+                            <div class="price-amount">₹2,000</div>
+                            <div>per session</div>
+                        </div>
+                        <a href="#bookAppointmentModal" data-bs-toggle="modal" class="btn btn-outline-primary w-100 mt-3">Book Now</a>
+                    </div>
+                    
+                    <!-- Treatment 5 -->
+                    <div class="treatment-card" data-aos="fade-up" data-aos-delay="600">
+                        <div class="treatment-icon">
+                            <i class="bi bi-droplet-half"></i>
+                        </div>
+                        <h3>PRP Therapy</h3>
+                        <p>Platelet-Rich Plasma therapy uses your own blood's growth factors to rejuvenate skin and stimulate collagen.</p>
+                        <ul class="benefits-list">
+                            <li>Natural facial rejuvenation</li>
+                            <li>Reduces under-eye circles</li>
+                            <li>Improves skin texture and tone</li>
+                            <li>Minimal downtime</li>
+                        </ul>
+                        <div class="price-card mt-3">
+                            <div class="price-amount">₹6,500</div>
+                            <div>per session</div>
+                        </div>
+                        <a href="#bookAppointmentModal" data-bs-toggle="modal" class="btn btn-outline-primary w-100 mt-3">Book Now</a>
+                    </div>
+                    
+                    <!-- Treatment 6 -->
+                    <div class="treatment-card" data-aos="fade-up" data-aos-delay="700">
+                        <div class="treatment-icon">
+                            <i class="bi bi-thermometer-sun"></i>
+                        </div>
+                        <h3>RF Skin Tightening</h3>
+                        <p>Radiofrequency energy heats the deep layers of skin to stimulate collagen production and tighten skin.</p>
+                        <ul class="benefits-list">
+                            <li>Non-surgical facelift alternative</li>
+                            <li>Reduces sagging skin</li>
+                            <li>Improves skin elasticity</li>
+                            <li>No downtime</li>
+                        </ul>
+                        <div class="price-card mt-3">
+                            <div class="price-amount">₹5,000</div>
+                            <div>per session</div>
+                        </div>
+                        <a href="#bookAppointmentModal" data-bs-toggle="modal" class="btn btn-outline-primary w-100 mt-3">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======= Animated Image Scroller Section =======-->
+        <section class="skincare-slider-section py-5 bg-light">
+            <div class="container">
+                <div class="row mb-4">
+                    <div class="col-lg-8 mx-auto text-center">
+                        <h2 class="fw-bold mb-3 gradient-text" data-aos="fade-up">See the Difference</h2>
+                        <p class="lead" data-aos="fade-up" data-aos-delay="100">Real results from real patients. Slide to see before & after transformations and our advanced treatments in action.</p>
+                    </div>
+                </div>
+                <div class="slider-wrapper position-relative" data-aos="fade-up" data-aos-delay="200">
+                    <button id="prev-slide" class="slide-button btn btn-outline-primary rounded-circle position-absolute top-50 start-0 translate-middle-y" style="z-index:2;">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                    <div class="slider-container overflow-hidden">
+                        <ul class="image-list d-flex mb-0 p-0" style="list-style:none; transition: transform 0.6s cubic-bezier(.25,1.25,.5,1);">
+                            <li class="image-item-wrapper me-3">
+                                <img class="image-item rounded-4 shadow" src="/assets/images/img-16-min.jpg" alt="Before & After - Case 1" data-bs-toggle="modal" data-bs-target="#imageModal" data-image="/assets/images/img-16-min.jpg">
+                            </li>
+                            <li class="image-item-wrapper me-3">
+                                <img class="image-item rounded-4 shadow" src="/assets/images/img-13-min.jpg" alt="Before & After - Case 2" data-bs-toggle="modal" data-bs-target="#imageModal" data-image="/assets/images/img-13-min.jpg">
+                            </li>
+                            <li class="image-item-wrapper me-3">
+                                <img class="image-item rounded-4 shadow" src="/assets/images/img-10-min.jpg" alt="Before & After - Case 3" data-bs-toggle="modal" data-bs-target="#imageModal" data-image="/assets/images/img-10-min.jpg">
+                            </li>
+                            <li class="image-item-wrapper me-3">
+                                <img class="image-item rounded-4 shadow" src="/assets/images/img-3-min.jpg" alt="Before & After - Case 4" data-bs-toggle="modal" data-bs-target="#imageModal" data-image="/assets/images/img-3-min.jpg">
+                            </li>
+                            <li class="image-item-wrapper me-3">
+                                <img class="image-item rounded-4 shadow" src="/assets/images/img-1-min.jpg" alt="Before & After - Case 5" data-bs-toggle="modal" data-bs-target="#imageModal" data-image="/assets/images/img-1-min.jpg">
+                            </li>
+                            <li class="image-item-wrapper me-3">
+                                <img class="image-item rounded-4 shadow" src="/assets/images/img-2-min.jpg" alt="Before & After - Case 6" data-bs-toggle="modal" data-bs-target="#imageModal" data-image="/assets/images/img-2-min.jpg">
+                            </li>
+                            <li class="image-item-wrapper me-3">
+                                <img class="image-item rounded-4 shadow" src="/assets/images/img-4-min.jpg" alt="Before & After - Case 7" data-bs-toggle="modal" data-bs-target="#imageModal" data-image="/assets/images/img-4-min.jpg">
+                            </li>
+                        </ul>
+                    </div>
+                    <button id="next-slide" class="slide-button btn btn-outline-primary rounded-circle position-absolute top-50 end-0 translate-middle-y" style="z-index:2;">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======= Consultation Section =======-->
+        <section class="consultation-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
+                        <h2 class="display-5 fw-bold mb-4">Get Your Free Consultation</h2>
+                        <p class="lead mb-4">Book a consultation with our expert dermatologists to get personalized treatment recommendations for your skin concerns.</p>
+                        <div class="d-flex gap-3 flex-wrap">
+                            <a href="https://wa.me/917396439736?text=I would like to book a skin consultation" 
+                               target="_blank" 
+                               class="btn btn-light btn-lg pulse-animation">
+                                <i class="bi bi-whatsapp me-2"></i>WhatsApp Consultation
+                            </a>
+                            <a href="tel:+917396439736" class="btn btn-outline-light btn-lg">
+                                <i class="bi bi-telephone-fill me-2"></i>Call for Appointment
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" data-aos="fade-left" data-aos-delay="400">
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <div class="text-center">
+                                    <div class="counter" data-target="1000">0</div>
+                                    <div>Happy Patients</div>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <div class="text-center">
+                                    <div class="counter" data-target="10">0</div>
+                                    <div>Years Experience</div>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <div class="text-center">
+                                    <div class="counter" data-target="98">0</div>
+                                    <div>Success Rate</div>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <div class="text-center">
+                                    <div class="counter" data-target="5">0</div>
+                                    <div>★ Patient Rating</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======= Expert Team Section =======-->
+        <section class="expert-section">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-lg-8 mx-auto text-center">
+                        <h2 class="display-5 fw-bold mb-4" data-aos="fade-up" data-aos-delay="0">Meet Our Expert Team</h2>
+                        <p class="lead" data-aos="fade-up" data-aos-delay="100">Board-certified dermatologists with years of experience in advanced skin care treatments.</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                        <div class="expert-card">
+                            <img src="/assets/images/about_2-min.jpg" alt="Dr. Alekhya Rallapalli" class="expert-image">
+                            <h3>Dr. Alekhya Rallapalli</h3>
+                            <p class="mb-2">MBBS, MD DVL</p>
+                            <p class="small">Specialist in Dermatology, Venereology & Leprosy</p>
+                            <div class="mt-3">
+                                <span class="badge bg-light text-dark me-2">Acne Specialist</span>
+                                <span class="badge bg-light text-dark me-2">Anti-Aging Expert</span>
+                                <span class="badge bg-light text-dark">Laser Specialist</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+                        <div class="expert-card">
+                            <h3>Why Choose Our Experts?</h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-3">
+                                    <i class="bi bi-check-circle-fill me-2"></i>
+                                    Board-certified dermatologists
+                                </li>
+                                <li class="mb-3">
+                                    <i class="bi bi-check-circle-fill me-2"></i>
+                                    Latest technology and treatments
+                                </li>
+                                <li class="mb-3">
+                                    <i class="bi bi-check-circle-fill me-2"></i>
+                                    Personalized treatment plans
+                                </li>
+                                <li class="mb-3">
+                                    <i class="bi bi-check-circle-fill me-2"></i>
+                                    Proven track record of success
+                                </li>
+                                <li class="mb-3">
+                                    <i class="bi bi-check-circle-fill me-2"></i>
+                                    Ongoing support and follow-up
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======= Testimonials Section =======-->
+        <section class="py-5">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-lg-8 mx-auto text-center">
+                        <h2 class="display-5 fw-bold mb-4" data-aos="fade-up" data-aos-delay="0">What Our Patients Say</h2>
+                        <p class="lead" data-aos="fade-up" data-aos-delay="100">Real stories from patients who have transformed their skin with our treatments.</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="testimonial-card">
+                            <div class="rating mb-2">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            </div>
+                            <p>"The acne treatment completely changed my life. My skin is now clear and I feel so much more confident. Dr. Alekhya is amazing!"</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <img src="/assets/images/person-sq-1-min.jpg" alt="Patient" class="rounded-circle me-3" width="50" height="50">
+                                <div>
+                                    <strong>Priya Sharma</strong><br>
+                                    <small class="text-muted">Acne Treatment</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="testimonial-card">
+                            <div class="rating mb-2">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            </div>
+                            <p>"The anti-aging treatments have made me look 10 years younger. The results are natural and long-lasting. Highly recommended!"</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <img src="/assets/images/person-sq-2-min.jpg" alt="Patient" class="rounded-circle me-3" width="50" height="50">
+                                <div>
+                                    <strong>Meera Patel</strong><br>
+                                    <small class="text-muted">Anti-Aging Treatment</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="400">
+                        <div class="testimonial-card">
+                            <div class="rating mb-2">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            </div>
+                            <p>"The laser treatment for pigmentation was incredible. My dark spots are gone and my skin tone is even. Thank you Astrid!"</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <img src="/assets/images/person-sq-3-min.jpg" alt="Patient" class="rounded-circle me-3" width="50" height="50">
+                                <div>
+                                    <strong>Anjali Reddy</strong><br>
+                                    <small class="text-muted">Laser Treatment</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======= Clinic Location Section ======= -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-lg-8 mx-auto text-center">
+                        <h2 class="fw-bold mb-3 gradient-text" data-aos="fade-up">Visit Our Clinic</h2>
+                        <p class="lead" data-aos="fade-up" data-aos-delay="100">Experience personalized care in our state-of-the-art facility</p>
+                    </div>
+                </div>
+                
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-4" data-aos="fade-right" data-aos-delay="200">
+                        <div id="clinic-map"></div>
+                    </div>
+                    <div class="col-lg-6" data-aos="fade-left" data-aos-delay="400">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <h3 class="card-title mb-4">Astrid Dermatology & Cosmetology Clinic</h3>
+                                <ul class="list-unstyled">
+                                    <li class="mb-3">
+                                        <i class="bi bi-geo-alt-fill me-2 text-primary"></i>
+                                        <strong>Address:</strong> 123 Skin Care Lane, Hyderabad, Telangana 500001
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="bi bi-telephone-fill me-2 text-primary"></i>
+                                        <strong>Phone:</strong> +91 7396439736
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="bi bi-envelope-fill me-2 text-primary"></i>
+                                        <strong>Email:</strong> info@astridclinic.com
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="bi bi-clock-fill me-2 text-primary"></i>
+                                        <strong>Hours:</strong> Mon-Sat: 9:00 AM - 7:00 PM
+                                    </li>
+                                </ul>
+                                <div class="mt-4">
+                                    <a href="https://maps.google.com?q=Astrid+Dermatology+%26+Cosmetology+Clinic+Hyderabad" target="_blank" class="btn btn-primary me-2">
+                                        <i class="bi bi-map me-1"></i> Get Directions
+                                    </a>
+                                    <a href="tel:+917396439736" class="btn btn-outline-primary">
+                                        <i class="bi bi-telephone me-1"></i> Call Now
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======= CTA Section =======-->
+        <section class="bg-primary text-white py-5">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-8" data-aos="fade-right" data-aos-delay="200">
+                        <h2 class="display-6 fw-bold mb-3">Ready to Transform Your Skin?</h2>
+                        <p class="lead mb-0">Book your consultation today and take the first step towards healthier, more beautiful skin.</p>
+                    </div>
+                    <div class="col-lg-4 text-lg-end" data-aos="fade-left" data-aos-delay="400">
+                        <a href="https://wa.me/917396439736?text=I want to book a skin consultation" 
+                           target="_blank" 
+                           class="btn btn-light btn-lg pulse-animation">
+                            <i class="bi bi-whatsapp me-2"></i>Book Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======= Footer =======-->
+        <footer class="bg-dark text-white py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 mb-4 mb-md-0">
+                        <h5>Astrid Dermatology & Cosmetology Clinic</h5>
+                        <p>Transform your skin and hair with expert care and advanced treatments.</p>
+                        <div class="social-icons mt-3">
+                            <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="text-white me-3"><i class="bi bi-twitter-x"></i></a>
+                            <a href="#" class="text-white"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4 mb-md-0">
+                        <h5>Quick Links</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><a href="index.html#home" class="text-white text-decoration-none">Home</a></li>
+                            <li class="mb-2"><a href="index.html#about" class="text-white text-decoration-none">About Us</a></li>
+                            <li class="mb-2"><a href="index.html#services" class="text-white text-decoration-none">Services</a></li>
+                            <li class="mb-2"><a href="index.html#contact" class="text-white text-decoration-none">Contact</a></li>
+                            <li><a href="#" class="text-white text-decoration-none">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Contact Info</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i> 123 Skin Care Lane, Hyderabad, Telangana 500001</li>
+                            <li class="mb-2"><i class="bi bi-telephone-fill me-2"></i> +91 7396439736</li>
+                            <li class="mb-2"><i class="bi bi-envelope-fill me-2"></i> info@astridclinic.com</li>
+                            <li><i class="bi bi-clock-fill me-2"></i> Mon-Sat: 9:00 AM - 7:00 PM</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+                <div class="text-center">
+                    <p class="mb-0">&copy; 2024 Astrid Clinic. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Floating Action Button -->
+    <a href="https://wa.me/917396439736" target="_blank" class="floating-action-btn">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top">
+        <i class="bi bi-arrow-up"></i>
+    </a>
+
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="" alt="Before & After" class="modal-image img-fluid" id="modalImage">
+                </div>
+            </div>
         </div>
-      </header>
+    </div>
 
+    <!-- Appointment Modal -->
+    <div class="modal fade" id="bookAppointmentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Book an Appointment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="appointmentForm">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="service" class="form-label">Service Interested In</label>
+                            <select class="form-select" id="service">
+                                <option value="">Select a service</option>
+                                <option value="HydraFacial">HydraFacial</option>
+                                <option value="Laser Skin Resurfacing">Laser Skin Resurfacing</option>
+                                <option value="Chemical Peels">Chemical Peels</option>
+                                <option value="Microdermabrasion">Microdermabrasion</option>
+                                <option value="PRP Therapy">PRP Therapy</option>
+                                <option value="RF Skin Tightening">RF Skin Tightening</option>
+                                <option value="Consultation">Consultation</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Preferred Date</label>
+                            <input type="date" class="form-control" id="date">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Additional Information</label>
+                            <textarea class="form-control" id="message" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Submit Appointment Request</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- ======= Scripts =======-->
+    <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendors/aos/aos.js"></script>
+    <script src="assets/vendors/glightbox/glightbox.min.js"></script>
+    <script src="assets/vendors/swiper/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false
+        });
 
+        // Remove loading screen when page is loaded
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loading-screen').style.opacity = '0';
+                setTimeout(function() {
+                    document.querySelector('.loading-screen').style.display = 'none';
+                }, 500);
+            }, 500);
+        });
 
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
 
+        // Scroll progress bar
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
 
+        // Back to top button
+        const backToTopButton = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('active');
+            } else {
+                backToTopButton.classList.remove('active');
+            }
+        });
 
+        backToTopButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
 
+        // Image slider functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.querySelector('.skincare-slider-section .image-list');
+            const prevBtn = document.getElementById('prev-slide');
+            const nextBtn = document.getElementById('next-slide');
+            const sliderContainer = document.querySelector('.slider-container');
+            const scrollAmount = 280; // px
+            
+            // Calculate max scroll
+            const maxScroll = slider.scrollWidth - sliderContainer.clientWidth;
+            
+            nextBtn.addEventListener('click', () => {
+                sliderContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            });
+            
+            prevBtn.addEventListener('click', () => {
+                sliderContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            });
+            
+            // Show/hide buttons based on scroll position
+            sliderContainer.addEventListener('scroll', function() {
+                if (sliderContainer.scrollLeft <= 10) {
+                    prevBtn.style.opacity = '0.5';
+                    prevBtn.style.pointerEvents = 'none';
+                } else {
+                    prevBtn.style.opacity = '0.8';
+                    prevBtn.style.pointerEvents = 'auto';
+                }
+                
+                if (sliderContainer.scrollLeft >= maxScroll - 10) {
+                    nextBtn.style.opacity = '0.5';
+                    nextBtn.style.pointerEvents = 'none';
+                } else {
+                    nextBtn.style.opacity = '0.8';
+                    nextBtn.style.pointerEvents = 'auto';
+                }
+            });
+            
+            // Initialize with prev button hidden
+            prevBtn.style.opacity = '0.5';
+            prevBtn.style.pointerEvents = 'none';
+        });
 
+        // Image modal functionality
+        const imageModal = document.getElementById('imageModal');
+        if (imageModal) {
+            imageModal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+                const imageSrc = button.getAttribute('data-image');
+                const modalImage = document.getElementById('modalImage');
+                modalImage.src = imageSrc;
+            });
+        }
 
+        // Animated counter
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200;
+        
+        function animateCounters() {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / speed;
+                
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(animateCounters, 1);
+                } else {
+                    counter.innerText = target;
+                }
+            });
+        }
+        
+        // Initialize counters when they come into view
+        const counterSection = document.querySelector('.consultation-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(counterSection);
 
+        // Initialize map
+        function initMap() {
+            // Coordinates for the clinic (example: Hyderabad coordinates)
+            const clinicLocation = [17.3850, 78.4867];
+            
+            // Create the map
+            const map = L.map('clinic-map').setView(clinicLocation, 15);
+            
+            // Add the tile layer (OpenStreetMap)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            
+            // Add a marker
+            L.marker(clinicLocation).addTo(map)
+                .bindPopup('Astrid Dermatology & Cosmetology Clinic')
+                .openPopup();
+        }
+        
+        // Initialize map when the section comes into view
+        const mapSection = document.querySelector('#clinic-map');
+        const mapObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    initMap();
+                    mapObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        mapObserver.observe(mapSection);
 
+        // Form submission
+        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const service = document.getElementById('service').value;
+            const date = document.getElementById('date').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send this data to your server
+            // For demonstration, we'll just show an alert
+            alert(`Thank you, ${name}! Your appointment request has been received. We will contact you shortly at ${phone}.`);
+            
+            // Close the modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('bookAppointmentModal'));
+            modal.hide();
+            
+            // Reset the form
+            this.reset();
+        });
 
+        // Floating image animation
+        const floatingImages = document.querySelectorAll('.floating-image');
+        floatingImages.forEach(img => {
+            img.style.transition = 'transform 3s ease-in-out';
+            setInterval(() => {
+                img.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    img.style.transform = 'translateY(0)';
+                }, 1500);
+            }, 3000);
+        });
 
-      
+        // Add parallax effect to elements
+        function addParallaxEffect() {
+            const parallaxElements = document.querySelectorAll('.parallax');
+            
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.pageYOffset;
+                
+                parallaxElements.forEach(element => {
+                    element.style.backgroundPositionY = scrollPosition * 0.5 + 'px';
+                });
+            });
+        }
+        
+        addParallaxEffect();
+    </script>
 </body>
 </html>
